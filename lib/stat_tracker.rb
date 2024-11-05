@@ -38,4 +38,3 @@ class StatTracker
       binding.pry
     end
   end
-end
