@@ -4,7 +4,6 @@ require './lib/teams'
 require './lib/games'
 require './lib/coaches'
 
-
 class StatTracker
   attr_reader :teams, :games, :game_teams
 
@@ -34,7 +33,7 @@ class StatTracker
     game_teams = CSV.read(csv_paths[:game_teams], headers: true, header_converters: :symbol)
 
     CSV.foreach('./data/game_teams.csv', headers: true, header_converters: :symbol) do |coach|
-      game_teams_array << Coaches.new(coach[:team_id], coach[:hoa], coach[:result], coach[:settled_in], coach[:head_coach], coach[:goals], coach[:shots], coach[:tackles], coach[:pim], coach[:power_play_opportunities], coach[:power_play_goals], coach[:face_off_win_percentage], coach[:giveaways], coach[:take_aways])
-      binding.pry
+      game_teams_array << Coaches.new(coach[:team_id], coach[:hoa], coach[:result], coach[:settled_in], coach[:head_coach], coach[:goals], coach[:shots], coach[:tackles], coach[:pim], coach[:powerplayopportunities], coach[:powerplaygoals], coach[:faceoffwinpercentage], coach[:giveaways], coach[:takeaways])
     end
   end
+end

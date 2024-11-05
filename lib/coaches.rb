@@ -16,7 +16,7 @@ class Coaches
     @pim = pim
     @power_play_opportunities = power_play_opportunities
     @power_play_goals = power_play_goals
-    @face_off_win_percentage = face_off_win_percentage.to_f
+    @face_off_win_percentage = face_off_win_percentage
     @give_aways = give_aways
     @take_aways = take_aways
   end
