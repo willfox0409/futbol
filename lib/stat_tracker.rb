@@ -7,7 +7,7 @@ require_relative './game_team'
 class StatTracker
   attr_reader :teams, :games, :game_teams
 
-  def initialize(locations)
+  def initialize(teams, games, game_teams)
     @teams = teams
     @games = games
     @game_teams = game_teams
@@ -31,7 +31,7 @@ class StatTracker
     game_teams_data.each do |row|
       game_teams << GameTeam.new(row)
     end
-
+    
     return StatTracker.new(teams, games, game_teams)
   end
 end

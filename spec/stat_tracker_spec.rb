@@ -7,7 +7,7 @@ RSpec.describe StatTracker do
     @team_path = './data/teams.csv'
     @game_teams_path = './data/game_teams.csv'
 
-    @locations = {
+    locations = {
       games: @game_path,
       teams: @team_path,
       game_teams: @game_teams_path
@@ -15,7 +15,8 @@ RSpec.describe StatTracker do
   end
 
   it "should exist" do
-    @stat_tracker = StatTracker.new(@locations)
+    @stat_tracker = StatTracker.new(teams, games, game_teams)
     expect(@stat_tracker).to be_a StatTracker
+    binding.pry
   end
 end
