@@ -1,7 +1,7 @@
 require 'csv'
 require 'pry'
   
-class Coach
+class GameTeam
   attr_reader :game_id, :team_id, :hoa, :result, :settled_in, :head_coach, :goals, :shots, :tackles, :pim, :power_play_opportunities, :power_play_goals, :face_off_win_percentage, :give_aways, :take_aways
 
   def initialize(data)

@@ -1,5 +1,5 @@
 # require './spec_helper'
-require './lib/stat_tracker'
+require_relative './stat_tracker'
 
 RSpec.describe StatTracker do 
   before :each do

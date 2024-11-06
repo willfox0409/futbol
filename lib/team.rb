@@ -1,6 +1,6 @@
 require 'csv'
 require 'pry'
-require './lib/stat_tracker'
+require_relative './stat_tracker'
 
 class Team
   attr_reader :team_id, :franchiseid, :teamname, :abbreviation, :stadium, :link
