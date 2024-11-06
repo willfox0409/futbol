@@ -1,8 +1,8 @@
 require 'pry'
 require 'csv'
-require './lib/teams'
-require './lib/games'
-require './lib/coaches'
+require_relative './team'
+require_relative './game'
+require_relative './game_team'
 
 class StatTracker
   attr_reader :teams, :games, :game_teams
@@ -13,27 +13,25 @@ class StatTracker
     @game_teams = game_teams
   end
 
-  def self.from_csv(csv_paths)
-    teams_array = []
-    games_array = []
-    game_teams_array = []
-
-    teams = CSV.read(csv_paths[:teams], headers: true, header_converters: :symbol) 
-
-    CSV.foreach('./data/teams.csv', headers: true, header_converters: :symbol) do |team|
-      teams_array << Teams.new(team[:team_id], team[:franchiseid], team[:teamname], team[:abbreviation], team[:stadium], team[:link])
+  def self.from_csv(locations)
+    teams = []
+    teams_data = CSV.read(locations[:teams], headers: true)
+    teams_data.each do |row|
+      teams << Team.new(row)
+    end
+    
+    games = []
+    games_data = CSV.read(locations[:games], headers: true)
+    games_data.each do |row|
+      games << Game.new(row)
     end
 
-    games = CSV.read(csv_paths[:games], headers: true, header_converters: :symbol) 
-
-    CSV.foreach('./data/games.csv', headers: true, header_converters: :symbol) do |game|
-      games_array << Games.new(game[:game_id], game[:season], game[:type], game[:date_time], game[:away_team_id], game[:home_team_id], game[:away_goals], game[:home_goals], game[:venue], game[:venue_link])
+    game_teams = []
+    game_teams_data = CSV.read(locations[:game_teams], headers: true)
+    game_teams_data.each do |row|
+      game_teams << GameTeam.new(row)
     end
-
-    game_teams = CSV.read(csv_paths[:game_teams], headers: true, header_converters: :symbol)
-
-    CSV.foreach('./data/game_teams.csv', headers: true, header_converters: :symbol) do |coach|
-      game_teams_array << Coaches.new(coach[:team_id], coach[:hoa], coach[:result], coach[:settled_in], coach[:head_coach], coach[:goals], coach[:shots], coach[:tackles], coach[:pim], coach[:powerplayopportunities], coach[:powerplaygoals], coach[:faceoffwinpercentage], coach[:giveaways], coach[:takeaways])
-    end
+    
+    return StatTracker.new(teams, games, game_teams)
   end
 end
