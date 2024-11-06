@@ -8,10 +8,10 @@ class StatTracker
   attr_reader :teams, :games, :game_teams
 
   def initialize(locations)
-    @teams = object_creation(locations[:teams], Teams, :team_id)
+    @teams = object_creation(locations[:teams], Team, :team_id)
     # binding.pry
-    @games = object_creation(locations[:games], Games, :game_id)
-    @game_teams = object_creation(locations[:game_teams], Coaches, :game_id)
+    @games = object_creation(locations[:games], Game, :game_id)
+    @game_teams = object_creation(locations[:game_teams], Coach, :game_id)
     binding.pry
   end
 
