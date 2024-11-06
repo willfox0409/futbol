@@ -12,5 +12,5 @@ class Team
     @abbreviation = data["abbreviation"]
     @stadium = data["Stadium"]
     @link = data["link"]
-  end
+  end 
 end
