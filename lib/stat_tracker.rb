@@ -90,12 +90,4 @@ class StatTracker
     end
     all_teams.count
   end
-
-  def best_offense
-    all_teams = @game_teams.each do |game_team|
-      team_id = game_team.team_id
-      goals = game_team.goals
-      binding.pry
-    end
-  end
 end
