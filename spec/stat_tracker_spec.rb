@@ -17,6 +17,5 @@ RSpec.describe StatTracker do
   it "should exist" do
     @stat_tracker = StatTracker.new(teams, games, game_teams)
     expect(@stat_tracker).to be_a StatTracker
-    binding.pry
   end
 end
