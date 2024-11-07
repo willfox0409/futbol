@@ -82,4 +82,20 @@ class StatTracker
 
     average_per_season
   end
+
+  def count_of_teams
+    all_teams = []
+    @teams.each do |team|
+      all_teams << team
+    end
+    all_teams.count
+  end
+
+  def best_offense
+    all_teams = @game_teams.each do |game_team|
+      team_id = game_team.team_id
+      goals = game_team.goals
+      binding.pry
+    end
+  end
 end
