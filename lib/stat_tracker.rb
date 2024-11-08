@@ -224,18 +224,18 @@ class StatTracker
     end
   end
 
-  def highest_scoring_vistor
+  def highest_scoring_visitor
     away_team_hash = {}
     away_game = {}
 
     @games.each do |game|
       id = game.away_team_id
       away_goals = game.away_goals
-
+      # if away_team hash doesn't have the away_team_id as the key
       if away_team_hash[id]
         away_team_hash[id] += away_goals.to_i
         away_game[id] += 1
-
+      # it goes to else if the away_team_hash has the away_team_id
       else
         away_team_hash[id] = away_goals.to_i
         away_game[id] = 1
@@ -253,6 +253,108 @@ class StatTracker
 
     @teams.each do |team|
       if team.team_id == best_visitor[0]
+        return team.teamName
+      end
+    end
+  end
+
+  def highest_scoring_home_team
+    home_team_hash = {}
+    home_game = {}
+
+    @games.each do |game|
+      id = game.home_team_id
+      home_goals = game.home_goals
+
+      if home_team_hash[id]
+        home_team_hash[id] += home_goals.to_i
+        home_game[id] += 1
+
+      else
+        home_team_hash[id] = home_goals.to_i
+        home_game[id] = 1
+      end
+    end
+
+    home_team_hash.each do |id, home_goals|
+      home_team_hash[id] = (home_goals.to_f / home_game[id].to_f).round(2)
+    end
+
+    best_home_team = home_team_hash.max_by do |id, home_goals|
+      home_goals
+    end
+    best_home_team
+
+    @teams.each do |team|
+      if team.team_id == best_home_team[0]
+        return team.teamName
+      end
+    end
+  end
+
+  def lowest_scoring_visitor
+    away_team_hash = {}
+    away_game = {}
+
+    @games.each do |game|
+      id = game.away_team_id
+      away_goals = game.away_goals
+
+      if away_team_hash[id]
+        away_team_hash[id] += away_goals.to_i
+        away_game[id] += 1
+      
+      else
+        away_team_hash[id] = away_goals.to_i
+        away_game[id] = 1
+      end
+    end
+
+    away_team_hash.each do |id, away_goals|
+      away_team_hash[id] = (away_goals.to_f / away_game[id].to_f).round(2)
+    end
+
+    worst_visitor = away_team_hash.min_by do |id, away_goals|
+      away_goals
+    end
+    worst_visitor
+
+    @teams.each do |team|
+      if team.team_id == worst_visitor[0]
+        return team.teamName
+      end
+    end
+  end
+
+  def lowest_scoring_home_team
+    home_team_hash = {}
+    home_game = {}
+
+    @games.each do |game|
+      id = game.home_team_id
+      home_goals = game.home_goals
+     
+      if home_team_hash[id]
+        home_team_hash[id] += home_goals.to_i
+        home_game[id] += 1
+    
+      else
+        home_team_hash[id] = home_goals.to_i
+        home_game[id] = 1
+      end
+    end
+
+    home_team_hash.each do |id, home_goals|
+      home_team_hash[id] = (home_goals.to_f / home_game[id].to_f).round(2)
+    end
+
+    worst_home_team = home_team_hash.min_by do |id, home_goals|
+      home_goals
+    end
+    worst_home_team
+
+    @teams.each do |team|
+      if team.team_id == worst_home_team[0]
         return team.teamName
       end
     end
