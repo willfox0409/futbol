@@ -190,5 +190,71 @@ class StatTracker
       end
     end
   end
-end
 
+  def worst_offense
+    team_hash = {}
+    team_games = {}
+
+    @game_teams.each do |game_team|
+      id = game_team.team_id
+      goals = game_team.goals
+
+      if team_hash[id]
+        team_hash[id] += goals.to_i
+        team_games[id] += 1
+      else
+        team_hash[id] = goals.to_i
+        team_games[id] = 1
+      end
+    end
+
+    team_hash.each do |id, goals|
+      team_hash[id] = (goals.to_f / team_games[id].to_f).round(2)
+    end
+
+    worst = team_hash.min_by do |id, goals|
+      goals
+    end
+    worst
+  
+    @teams.each do |team|
+      if team.team_id == worst[0]
+        return team.teamName
+      end
+    end
+  end
+
+  def highest_scoring_vistor
+    away_team_hash = {}
+    away_game = {}
+
+    @games.each do |game|
+      id = game.away_team_id
+      away_goals = game.away_goals
+
+      if away_team_hash[id]
+        away_team_hash[id] += away_goals.to_i
+        away_game[id] += 1
+
+      else
+        away_team_hash[id] = away_goals.to_i
+        away_game[id] = 1
+      end
+    end
+
+    away_team_hash.each do |id, away_goals|
+      away_team_hash[id] = (away_goals.to_f / away_game[id].to_f).round(2)
+    end
+
+    best_visitor = away_team_hash.max_by do |id, away_goals|
+      away_goals
+    end
+    best_visitor
+
+    @teams.each do |team|
+      if team.team_id == best_visitor[0]
+        return team.teamName
+      end
+    end
+  end
+end
