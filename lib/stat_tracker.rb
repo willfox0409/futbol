@@ -17,75 +17,36 @@ class StatTracker
   def self.from_csv(locations)
     ###TEAMS###
     teams = []
-    teams_data = CSV.read(locations[:teams], headers: true, header_converters: :symbol)
+    teams_data = CSV.read(locations[:teams], headers: true)
     teams_data.each do |row|
-      team_data = {
-        "team_id" => row[:team_id],
-        "franchise_id" => row[:franchiseId],
-        "team_name" => row[:teamName],
-        "abbreviation" => row[:abbreviation],
-        "stadium" => row[:Stadium],
-        "link" => row[:link]
-      }
-      team = Team.new(team_data)
-      teams << team
+      teams << Team.new(row)
     end
-  
+
     ###GAMES###
     games = []
-    CSV.foreach(locations[:games], headers: true, header_converters: :symbol) do |row|
-      game_data = {
-        "game_id" => row[:game_id],
-        "season" => row[:season],
-        "type" => row[:type],
-        "date_time" => row[:date_time],
-        "away_team_id" => row[:away_team_id],
-        "home_team_id" => row[:home_team_id],
-        "away_goals" => row[:away_goals].to_i,
-        "home_goals" => row[:home_goals].to_i,
-        "venue" => row[:venue],
-        "venue_link" => row[:venue_link]
-      }
-      game = Game.new(game_data)
-      games << game
-    end    
+    games_data = CSV.read(locations[:games], headers: true)
+    games_data.each do |row|
+      games << Game.new(row)
+    end
 
     ###GAME_TEAMS###
     game_teams = []
-    game_teams_data = CSV.read(locations[:game_teams], headers: true, header_converters: :symbol) # Read CSV
-    game_teams_data.each do |row|  # Now you can iterate over game_teams_data
-      game_team_data = {
-        "game_id" => row[:game_id],
-        "team_id" => row[:team_id],
-        "hoa" => row[:HoA],
-        "result" => row[:result],
-        "settled_in" => row[:settled_in],
-        "head_coach" => row[:head_coach],
-        "goals" => row[:goals].to_i,
-        "shots" => row[:shots].to_i,
-        "tackles" => row[:tackles].to_i,
-        "pim" => row[:pim].to_i,
-        "power_play_opps" => row[:powerPlayOpportunities].to_i,
-        "power_play_goals" => row[:powerPlayGoals].to_i,
-        "face_off_win_percentage" => row[:faceOffWinPercentage].to_f,
-        "giveaways" => row[:giveaways].to_i,
-        "takeaways" => row[:takeaways].to_i
-      }
-      game_team = GameTeam.new(game_team_data)
-      game_teams << game_team
+    game_teams_data = CSV.read(locations[:game_teams], headers: true)
+    game_teams_data.each do |row|
+      game_teams << GameTeam.new(row)
     end
-        
+
     # Return the StatTracker instance with populated data
     StatTracker.new(teams, games, game_teams)
   end
-
+        
   #####HIGHEST SCORE####
   def highest_total_score
     # set to the lowest possible score first
     highest_score = 0
      # Iterate through each game 
      @games.each do |game|
-      total_score = game.away_goals + game.home_goals
+      total_score = game.away_goals.to_i + game.home_goals.to_i
       # Update highest_score if the total_score is greater
       highest_score = total_score if total_score > highest_score
     end
@@ -98,7 +59,7 @@ class StatTracker
     lowest_score = 99
     # iterate through each game
     @games.each do |game|
-      total_score = game.away_goals + game.home_goals
+      total_score = game.away_goals.to_i + game.home_goals.to_i
       # update lowest_score if total_score is LOWER
       lowest_score = total_score if total_score < lowest_score
     end
@@ -196,4 +157,38 @@ class StatTracker
     end
     all_teams.count
   end
+
+  def best_offense
+    team_hash = {}
+    team_games = {}
+
+    @game_teams.each do |game_team|
+      id = game_team.team_id
+      goals = game_team.goals
+
+      if team_hash[id]
+        team_hash[id] += goals.to_i
+        team_games[id] += 1
+      else
+        team_hash[id] = goals.to_i
+        team_games[id] = 1
+      end
+    end
+
+    team_hash.each do |id, goals|
+      team_hash[id] = (goals.to_f / team_games[id].to_f).round(2)
+    end
+
+    best = team_hash.max_by do |id, goals|
+      goals
+    end
+    best
+   
+    @teams.each do |team|
+      if team.team_id == best[0]
+        return team.teamName
+      end
+    end
+  end
 end
+
