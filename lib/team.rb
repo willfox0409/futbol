@@ -7,10 +7,10 @@ class Team
 
   def initialize(data)
     @team_id = data["team_id"]
-    @franchiseid = data["franchiseId"]
-    @teamname = data["teamName"]
+    @franchiseId = data["franchiseId"]
+    @teamName = data["teamName"]
     @abbreviation = data["abbreviation"]
-    @stadium = data["Stadium"]
+    @Stadium = data["Stadium"]
     @link = data["link"]
   end
 end
