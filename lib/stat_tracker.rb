@@ -359,4 +359,66 @@ class StatTracker
       end
     end
   end
+
+  def get_season(provided_game_id)
+    @games.each do |game|
+      season = game[:season]
+      game_id = game[:game_id]
+      if game_id == (provided_game_id)
+        return season
+      end
+    end
+  end
+
+  # {
+  #   season_id: { 
+  #     coach_id: {
+  #       games_won: 0
+  #       games_played: 0
+  #     }
+  #   }
+  # }
+  def winningest_coach
+    # coach_stats = {season = {"games_won", "games_played"}}
+    coach_stats = {}
+    
+    @game_teams.each do |game_team|
+      coach = game_team[:head_coach]
+      result = game_team[:result]
+      game_id = game_team[:game_id]
+      season_id = get_season(game_id)
+
+      coach_stats[season_id] = {}
+      coach_stats[season_id][coach] = {"games_won": 0, "games_played": 0}
+      # here create a hash map that looks like
+      # coach_stats = {
+      #   season_id = {}
+      # }
+
+      # here create a hash map that looks like
+      # coach_stats = {
+      #   season_id = {
+      #     coach_id = {}
+      #   }
+      # }
+
+      # here create a hash map that looks like
+      # coach_stats = {
+      #   season_id = {
+      #     coach_id = {
+      #       "games_won": 0,
+      #       "games_lost": 0,
+      #     }
+      #   }
+      # }
+
+      
+      if result == "WIN"
+        coach_stats[season_id][coach]["games_won"] += 1
+      end
+      
+      coach_stats[season_id][coach]["games_played"] +=1
+
+    end
+  end
 end
