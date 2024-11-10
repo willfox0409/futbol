@@ -39,6 +39,10 @@ class StatTracker
     # Return the StatTracker instance with populated data
     StatTracker.new(teams, games, game_teams)
   end
+
+  def inspect
+    "#<#{self.class.name}:#{self.object_id} "
+  end
         
   #####HIGHEST SCORE####
   def highest_total_score
@@ -100,10 +104,6 @@ class StatTracker
     total_games = @games.count
     #calculate percentage, rounded 2 places
     (ties.to_f / total_games).round(2)
-  end
-
-  def inspect
-    "#<#{self.class.name}:#{self.object_id} "
   end
 
   def count_of_games_by_season
