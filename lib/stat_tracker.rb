@@ -39,6 +39,10 @@ class StatTracker
     # Return the StatTracker instance with populated data
     StatTracker.new(teams, games, game_teams)
   end
+
+  def inspect
+    "#<#{self.class.name}:#{self.object_id} "
+  end
         
   #####HIGHEST SCORE####
   def highest_total_score
@@ -102,10 +106,6 @@ class StatTracker
     (ties.to_f / total_games).round(2)
   end
 
-  def inspect
-    "#<#{self.class.name}:#{self.object_id} "
-  end
-
   def count_of_games_by_season
     season_hash = {}
     @games.each do |game|
@@ -151,11 +151,7 @@ class StatTracker
   end
 
   def count_of_teams
-    all_teams = []
-    @teams.each do |team|
-      all_teams << team
-    end
-    all_teams.count
+    @teams.count 
   end
 
   def best_offense
