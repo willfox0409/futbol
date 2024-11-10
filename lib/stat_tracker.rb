@@ -151,11 +151,7 @@ class StatTracker
   end
 
   def count_of_teams
-    all_teams = []
-    @teams.each do |team|
-      all_teams << team
-    end
-    all_teams.count
+    @teams.count
   end
 
   def best_offense
