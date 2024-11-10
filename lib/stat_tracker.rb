@@ -151,7 +151,7 @@ class StatTracker
   end
 
   def count_of_teams
-    @teams.count
+    @teams.count 
   end
 
   def best_offense
