@@ -360,70 +360,48 @@ class StatTracker
     end
   end
 
-  def get_season(provided_game_id)
-    @games.each do |game|
-      season = game[:season]
-      game_id = game[:game_id]
-      if game_id == (provided_game_id)
-        return season
-      end
-    end
-  end
+  # def get_season(provided_game_id)
+  #   @games.each do |game|
+  #     season = game[:season]
+  #     game_id = game[:game_id]
+  #     if game_id == (provided_game_id)
+  #       return season
+  #     end
+  #   end
+  # end
 
-  # {
-  #   season_id: { 
-  #     coach_id: {
-  #       games_won: 0
-  #       games_played: 0
-  #     }
-  #   }
-  # }
-  def winningest_coach
-    # coach_stats = {season = {"games_won", "games_played"}}
-    coach_stats = {}
-    
+  def winningest_coach(season)
+    num_of_win = Hash.new(0)
     @game_teams.each do |game_team|
-      coach = game_team[:head_coach]
-      result = game_team[:result]
-      game_id = game_team[:game_id]
-      season_id = get_season(game_id)
-
-      coach_stats[season_id] = {}
-      coach_stats[season_id][coach] = {"games_won": 0, "games_played": 0, "percent_wins": 0}
-      # here create a hash map that looks like
-      # coach_stats = {
-      #   season_id = {}
-      # }
-
-      # here create a hash map that looks like
-      # coach_stats = {
-      #   season_id = {
-      #     coach_id = {}
-      #   }
-      # }
-
-      # here create a hash map that looks like
-      # coach_stats = {
-      #   season_id = {
-      #     coach_id = {
-      #       "games_won": 0,
-      #       "games_lost": 0,
-      #     }
-      #   }
-      # }
-
-      
-      if result == "WIN"
-        coach_stats[season_id][coach]["games_won"] += 1
+      #refactor: use start_with? per Jillian
+      if season[0,4] == game_team.game_id[0,4] && game_team.result == "WIN"
+        num_of_win[game_team.head_coach] += 1
       end
-      
-      coach_stats[season_id][coach]["games_played"] +=1
-
-      coach_stats[season_id][coach]["percent_wins"] = ((coach_stats[season_id][coach]["games_won"].to_f/coach_stats[season_id][coach]["games_played"].to_f)*100).round(2)
-      
-      #coach_stats[season_id]["win_percentage"].max_by ??
-    
     end
-    binding.pry
+    num_of_win.each do |coach, wins|
+      count_of_games_by_season.each do |s|
+        if s[0] == season
+          num_of_win[coach] = (wins / s[1].to_f * 100).round(2)
+        end
+      end
+    end
+    return winning_coach = num_of_win.key(num_of_win.values.max)
+  end
+  def worst_coach(season)
+    num_of_loss = Hash.new(0)
+    @game_teams.each do |game_team|
+      #refactor: use start_with? per Jillian
+      if season[0,4] == game_team.game_id[0,4] && game_team.result == "LOSS"
+        num_of_loss[game_team.head_coach] += 1
+      end
+    end
+    num_of_loss.each do |coach, loss|
+      count_of_games_by_season.each do |s|
+        if s[0] == season
+          num_of_loss[coach] = (loss / s[1].to_f * 100).round(2)
+        end
+      end
+    end
+    return losing_coach = num_of_loss.key(num_of_loss.values.min)
   end
 end
