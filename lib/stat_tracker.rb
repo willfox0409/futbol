@@ -389,7 +389,7 @@ class StatTracker
       season_id = get_season(game_id)
 
       coach_stats[season_id] = {}
-      coach_stats[season_id][coach] = {"games_won": 0, "games_played": 0}
+      coach_stats[season_id][coach] = {"games_won": 0, "games_played": 0, "percent_wins": 0}
       # here create a hash map that looks like
       # coach_stats = {
       #   season_id = {}
@@ -419,6 +419,11 @@ class StatTracker
       
       coach_stats[season_id][coach]["games_played"] +=1
 
+      coach_stats[season_id][coach]["percent_wins"] = ((coach_stats[season_id][coach]["games_won"].to_f/coach_stats[season_id][coach]["games_played"].to_f)*100).round(2)
+      
+      #coach_stats[season_id]["win_percentage"].max_by ??
+    
     end
+    binding.pry
   end
 end
