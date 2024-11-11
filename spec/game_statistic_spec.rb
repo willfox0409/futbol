@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 require './lib/stat_tracker'
-require './lib/game_statistics.rb'
+require './lib/game_statistics'
 
 RSpec.describe GameStatistics do 
   before :each do
@@ -14,6 +14,7 @@ RSpec.describe GameStatistics do
       game_teams: @game_teams_path
     }
 
+    
     @stat_tracker = StatTracker.from_csv(locations)
     @game_statistics = GameStatistics.new(@games)
   end
