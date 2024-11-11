@@ -19,9 +19,10 @@ class SeasonStatistics
         end
 
         num_of_win.each do |coach, wins|
-            count_of_games_by_season.each do |s|
-            if s[0] == season
-                num_of_win[coach] = (wins / s[1].to_f * 100).round(2)
+            count_of_games_by_season.each do |the_season|
+                if the_season[0] == season
+                    num_of_win[coach] = (wins / the_season[1].to_f * 100).round(2)
+                end
             end
         end
 
@@ -37,9 +38,10 @@ class SeasonStatistics
         end
 
         num_of_loss.each do |coach, loss|
-            count_of_games_by_season.each do |s|
-            if s[0] == season
-                num_of_loss[coach] = (loss / s[1].to_f * 100).round(2)
+            count_of_games_by_season.each do |the_season|
+                if the_season[0] == season
+                    num_of_loss[coach] = (loss / the_season[1].to_f * 100).round(2)
+                end
             end
         end
 
