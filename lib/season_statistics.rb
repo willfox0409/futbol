@@ -1,10 +1,11 @@
 class SeasonStatistics
-    attr_reader :teams, :game_teams, :games
+    attr_reader :teams, :game_teams, :games, :game_statistics
   
     def initialize(teams, game_teams, games)
       @teams = teams
       @game_teams = game_teams
       @games = games
+      @game_statistics = GameStatistics.new(@games)
     end
 
     def count_of_teams
@@ -20,7 +21,7 @@ class SeasonStatistics
         end
 
         num_of_win.each do |coach, wins|
-            count_of_games_by_season.each do |the_season|
+            @game_statistics.count_of_games_by_season.each do |the_season|
                 if the_season[0] == season
                     num_of_win[coach] = (wins / the_season[1].to_f * 100).round(2)
                 end
@@ -39,7 +40,7 @@ class SeasonStatistics
         end
 
         num_of_loss.each do |coach, loss|
-            count_of_games_by_season.each do |the_season|
+            @game_statistics.count_of_games_by_season.each do |the_season|
                 if the_season[0] == season
                     num_of_loss[coach] = (loss / the_season[1].to_f * 100).round(2)
                 end
