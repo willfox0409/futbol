@@ -1,8 +1,8 @@
 require_relative './spec_helper'
 require './lib/stat_tracker'
-require './lib/season_statistics.rb'
+require './lib/season_statistics'
 
-RSpec.describe GameStatistics do 
+RSpec.describe SeasonStatistics do 
   before :each do
     @game_path = './data/games.csv'
     @team_path = './data/teams.csv'
@@ -15,7 +15,7 @@ RSpec.describe GameStatistics do
     }
 
     @stat_tracker = StatTracker.from_csv(locations)
-    @season_statistics = SeasonStatistics.new(@teams, @game_teams)
+    @season_statistics = SeasonStatistics.new(@teams, @game_teams, @games)
   end
 
   describe '#initialize' do
@@ -32,6 +32,11 @@ RSpec.describe GameStatistics do
     it 'has access to the game_teams CSV' do
 
       expect(@season_statistics.game_teams).to eq(@game_teams)
+    end
+
+    it 'has access to the games CSV' do
+
+      expect(@season_statistics.games).to eq(@games)
     end
   end
 
