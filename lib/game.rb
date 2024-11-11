@@ -17,14 +17,4 @@ class Game
     @venue = data["venue"]
     @venue_link = data["venue_link"]
   end
-
-  # def get_season(provided_game_id)
-  #   @games.each do |game|
-  #     season = game[:season]
-  #     game_id = game[:game_id]
-  #     if game_id == (provided_game_id)
-  #       return season
-  #     end
-  #   end
-  # end
 end
