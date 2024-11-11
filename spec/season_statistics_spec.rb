@@ -1,6 +1,7 @@
 require_relative './spec_helper'
 require './lib/stat_tracker'
 require './lib/season_statistics'
+require './lib/game_statistics'
 
 RSpec.describe SeasonStatistics do 
   before :each do
@@ -15,13 +16,19 @@ RSpec.describe SeasonStatistics do
     }
 
     @stat_tracker = StatTracker.from_csv(locations)
+    @game_statistics = GameStatistics.new(@games)
     @season_statistics = SeasonStatistics.new(@teams, @game_teams, @games)
   end
 
   describe '#initialize' do
-    it 'is an instance of GameStatistics' do
+    it 'is an instance of SeasonStatistics' do
 
       expect(@season_statistics).to be_a(SeasonStatistics)
+    end
+
+    it 'also holds an instance of GameStatistics' do
+
+      expect(@game_statistics).to be_a(GameStatistics)
     end
 
     it 'has access to the teams CSV' do
