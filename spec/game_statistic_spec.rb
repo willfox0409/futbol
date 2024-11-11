@@ -15,6 +15,19 @@ RSpec.describe GameStatistics do
     }
 
     @stat_tracker = StatTracker.from_csv(locations)
+    @game_statistics = GameStatistics.new(@games)
+  end
+
+  describe '#initialize' do
+    it 'is an instance of GameStatistics' do
+
+      expect(@game_statistics).to be_a(GameStatistics)
+    end
+
+    it 'has access to the games CSV' do
+
+      expect(@game_statistics.games).to eq(@games)
+    end
   end
 
   describe '#highest_total_score' do
