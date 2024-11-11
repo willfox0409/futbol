@@ -1,9 +1,10 @@
 class SeasonStatistics
-    attr_reader :teams, :game_teams
+    attr_reader :teams, :game_teams, :games
   
-    def initialize(teams, game_teams)
+    def initialize(teams, game_teams, games)
       @teams = teams
       @game_teams = game_teams
+      @games = games
     end
 
     def count_of_teams
