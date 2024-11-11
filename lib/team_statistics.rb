@@ -56,7 +56,10 @@ class TeamStatistics
     end
     
     def highest_scoring_visitor
-        away_goals = goals_per_team(@game_teams)
+        away_games = @game_teams.select do |game_team|
+            game_team.hoa == "away"
+        end
+        away_goals = goals_per_team(away_games)
         highest_visitor = away_goals.max_by do |id, goals|
             goals
         end
@@ -74,7 +77,10 @@ class TeamStatistics
     end
     
     def lowest_scoring_visitor
-        away_goals = goals_per_team(@game_teams)
+        away_games = @game_teams.select do |game_team|
+            game_team.hoa == "away"
+        end
+        away_goals = goals_per_team(away_games)
         lowest_visitor = away_goals.min_by do |id, goals|
             goals
         end
