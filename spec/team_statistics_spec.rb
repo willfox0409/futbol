@@ -2,7 +2,7 @@ require_relative './spec_helper'
 require './lib/stat_tracker'
 require './lib/team_statistics.rb'
 
-RSpec.describe GameStatistics do 
+RSpec.describe TeamStatistics do 
     before :each do
       @game_path = './data/games.csv'
       @team_path = './data/teams.csv'
