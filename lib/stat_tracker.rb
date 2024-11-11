@@ -5,9 +5,10 @@ require_relative './game'
 require_relative './game_team'
 require_relative './game_statistics'
 require_relative './team_statistics'
+require_relative './season_statistics'
 
 class StatTracker
-  attr_reader :teams, :games, :game_teams, :game_statistics, :team_statistics
+  attr_reader :teams, :games, :game_teams, :game_statistics, :team_statistics, :season_statistics
 
   def initialize(teams, games, game_teams)
     @teams = teams
@@ -15,7 +16,7 @@ class StatTracker
     @game_teams = game_teams
     @game_statistics = GameStatistics.new(games)
     @team_statistics = TeamStatistics.new(teams, game_teams)
-    @season_statistics = SeasonStatistics.new(teams, game_teams)
+    @season_statistics = SeasonStatistics.new(teams, game_teams, games)
   end
 
   # Class method that reads CSV files and creates objects
