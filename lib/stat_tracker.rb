@@ -15,6 +15,7 @@ class StatTracker
     @game_teams = game_teams
     @game_statistics = GameStatistics.new(games)
     @team_statistics = TeamStatistics.new(teams, game_teams)
+    @season_statistics = SeasonStatistics.new(teams, game_teams)
   end
 
   # Class method that reads CSV files and creates objects
@@ -47,8 +48,72 @@ class StatTracker
   def inspect
     "#<#{self.class.name}:#{self.object_id} "
   end
+  
+  def highest_total_score
+    @game_statistics.highest_total_score
+  end
+
+  def lowest_total_score
+    @game_statistics.lowest_total_score
+  end
+
+  def percentage_home_wins
+    @game_statistics.percentage_home_wins
+  end
+
+  def percentage_visitor_wins
+    @game_statistics.percentage_visitor_wins
+  end
+
+  def percentage_ties
+    @game_statistics.percentage_ties
+  end
+
+  def count_of_games_by_season
+    @game_statistics.count_of_games_by_season
+  end
+
+  def average_goals_per_game
+    @game_statistics.average_goals_per_game
+  end
+
+  def average_goals_by_season
+    @game_statistics.average_goals_by_season
+  end
+
+  def best_offense
+    @team_statistics.best_offense
+  end
+
+  def worst_offense
+    @team_statistics.worst_offense
+  end
+
+  def highest_scoring_visitor
+    @team_statistics.highest_scoring_visitor
+  end
+
+  def highest_scoring_home_team
+    @team_statistics.highest_scoring_home_team
+  end
+
+  def lowest_scoring_visitor
+    @team_statistics.lowest_scoring_visitor
+  end
+
+  def lowest_scoring_home_team
+    @team_statistics.lowest_scoring_home_team
+  end
 
   def count_of_teams
-    @teams.count 
+    @season_statistics.count_of_teams
+  end
+
+  def winningest_coach(season)
+    @season_statistics.winningest_coach(season)
+  end
+
+  def worst_coach(season)
+    @season_statistics.worst_coach(season)
   end
 end
